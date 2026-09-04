@@ -188,7 +188,7 @@
                 <div>
                     <label class="text-xs text-gray-400 font-medium mb-1 block">Axyra Kullanıcı ID</label>
                     <div class="flex space-x-2">
-                        <input type="text" id="target-user-id" placeholder="Örn: kullanıcı ID'sini buraya yazın" class="w-full bg-gray-50 dark:bg-darkBg border border-gray-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary transition">
+                        <input type="text" id="target-user-id" placeholder="Örn: AX-SLBig7" class="w-full bg-gray-50 dark:bg-darkBg border border-gray-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary transition">
                         <button onclick="searchUser()" class="bg-gray-200 dark:bg-white/10 px-4 rounded-xl font-bold text-xs hover:opacity-80 transition">Ara</button>
                     </div>
                 </div>
@@ -201,7 +201,7 @@
                         </div>
                         <div>
                             <div id="target-username" class="font-bold text-sm">Kullanıcı Bulundu</div>
-                            <div class="text-[10px] text-gray-400">ID: <span id="target-uid-text">---</span></div>
+                            <div class="text-[10px] text-gray-400">Axyra ID: <span id="target-uid-text">---</span></div>
                         </div>
                     </div>
                     <span class="text-xs text-green-500 font-bold bg-green-500/10 px-2 py-1 rounded-lg">Geçerli ID</span>
@@ -255,11 +255,11 @@
         window.closeGiftModal = function() { document.getElementById('gift-modal').classList.add('hidden'); }
     </script>
 
-    <!-- Firebase Entegrasyonu ve Sadece ID ile Arama Mantığı -->
+    <!-- Firebase Entegrasyonu ve axyraId ile Arama Mantığı -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, updateDoc, increment, onSnapshot, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyC8gorNkABOCLcvRG5Jremc12U-aCHKgVk",
@@ -282,7 +282,7 @@
         window.logout = function() { signOut(auth); }
 
         let unsubscribe = null;
-        let foundTargetUserId = null;
+        let foundTargetDocId = null; // Firestore'daki gerçek doküman ID'si (UID)
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -307,26 +307,28 @@
             }
         });
 
-        // Yalnızca Axyra ID ile Kullanıcı Arama Fonksiyonu
+        // axyraId alanı üzerinden arama yapma
         window.searchUser = async function() {
-            const targetId = document.getElementById('target-user-id').value.trim();
-            if (!targetId) {
+            const targetAxyraId = document.getElementById('target-user-id').value.trim();
+            if (!targetAxyraId) {
                 alert("Lütfen bir Axyra ID girin.");
                 return;
             }
 
             try {
-                const userDocRef = doc(db, "users", targetId);
-                const userSnap = await getDoc(userDocRef);
+                const q = query(collection(db, "users"), where("axyraId", "==", targetAxyraId));
+                const querySnapshot = await getDocs(q);
 
-                if (userSnap.exists()) {
-                    foundTargetUserId = targetId;
-                    document.getElementById('target-uid-text').innerText = targetId;
+                if (!querySnapshot.empty) {
+                    const userDoc = querySnapshot.docs[0];
+                    foundTargetDocId = userDoc.id; // Dokümanın gerçek UID'sini sakla
+                    
+                    document.getElementById('target-uid-text').innerText = targetAxyraId;
                     document.getElementById('target-user-card').classList.remove('hidden');
                 } else {
-                    alert("Bu ID'ye sahip bir kullanıcı bulunamadı!");
+                    alert("Bu Axyra ID'ye sahip bir kullanıcı bulunamadı!");
                     document.getElementById('target-user-card').classList.add('hidden');
-                    foundTargetUserId = null;
+                    foundTargetDocId = null;
                 }
             } catch (error) {
                 alert("Arama sırasında hata oluştu: " + error.message);
@@ -341,12 +343,12 @@
                 return;
             }
 
-            if (!foundTargetUserId) {
+            if (!foundTargetDocId) {
                 alert("Lütfen önce geçerli bir Axyra ID aratıp doğrulayın.");
                 return;
             }
 
-            if (currentUser.uid === foundTargetUserId) {
+            if (currentUser.uid === foundTargetDocId) {
                 alert("Kendine coin gönderemezsin!");
                 return;
             }
@@ -367,8 +369,9 @@
                     return;
                 }
 
-                const receiverRef = doc(db, "users", foundTargetUserId);
+                const receiverRef = doc(db, "users", foundTargetDocId);
 
+                // Transfer: Gönderenden düş, alıcıya ekle
                 await updateDoc(senderRef, { coins: increment(-amount) });
                 await updateDoc(receiverRef, { coins: increment(amount) });
 
@@ -377,7 +380,7 @@
                 document.getElementById('target-user-id').value = "";
                 document.getElementById('gift-coin-amount').value = "";
                 document.getElementById('target-user-card').classList.add('hidden');
-                foundTargetUserId = null;
+                foundTargetDocId = null;
 
             } catch (error) {
                 alert("Transfer başarısız: " + error.message);
