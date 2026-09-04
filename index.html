@@ -11,8 +11,8 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#8B5CF6', // Mor tonu (Görseldeki Timo tarzı)
-                        darkBg: '#0F0728',  // Koyu mor/siyah arka plan
+                        primary: '#8B5CF6',
+                        darkBg: '#0F0728',
                         cardBg: '#1A0B3C'
                     }
                 }
@@ -37,7 +37,6 @@
             <span class="text-2xl font-black tracking-wider">AXYRA</span>
         </div>
 
-        <!-- Menü Linkleri -->
         <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600 dark:text-gray-300">
             <a href="#" class="hover:text-primary transition">Hakkımızda</a>
             <a href="#" class="hover:text-primary transition">İletişim</a>
@@ -46,13 +45,17 @@
         </nav>
 
         <div class="flex items-center space-x-4">
-            <!-- Tema Değiştirme -->
             <button onclick="toggleTheme()" class="bg-gray-100 dark:bg-white/10 w-10 h-10 rounded-xl flex items-center justify-center text-gray-700 dark:text-yellow-400 hover:opacity-80 transition">
                 <i id="theme-icon" class="fa-solid fa-moon"></i>
             </button>
 
-            <!-- Giriş / Bakiye Alanı -->
+            <!-- Giriş yapıldığında görünen bakiye, artı ve hediye butonları -->
             <div id="user-info" class="hidden flex items-center space-x-3">
+                <button onclick="openGiftModal()" class="bg-primary/20 border border-primary/40 text-primary px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center space-x-1.5 hover:bg-primary hover:text-white transition">
+                    <i class="fa-solid fa-gift"></i>
+                    <span class="hidden sm:inline">Hediye Gönder</span>
+                </button>
+
                 <div class="bg-primary/20 border border-primary/40 px-3.5 py-1.5 rounded-xl flex items-center space-x-2">
                     <i class="fa-solid fa-coins text-primary text-sm"></i>
                     <span id="user-coins" class="font-bold text-sm text-primary">0</span>
@@ -67,10 +70,8 @@
         </div>
     </header>
 
-    <!-- Ana İçerik (Hero Section - Görseldeki Gibi İki Sütun) -->
+    <!-- Ana İçerik (Hero Section) -->
     <main class="max-w-7xl w-full mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
-        
-        <!-- Sol Taraf: Başlık, Slogan ve Store Butonları -->
         <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
             <div class="inline-flex items-center space-x-2 bg-primary/10 border border-primary/30 px-4 py-2 rounded-full text-primary text-xs font-bold uppercase tracking-wider">
                 <i class="fa-solid fa-sparkles"></i>
@@ -85,7 +86,6 @@
                 Özel emojilerle sohbet daha heyecanlı, sesli ve görüntülü arama deneyimi kesintisiz seninle.
             </p>
 
-            <!-- Google Play & App Store Butonları (Görseldeki Gibi) -->
             <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-2">
                 <button onclick="alert('Google Play Store yönlendirmesi')" class="bg-black text-white px-6 py-3.5 rounded-2xl flex items-center space-x-3 hover:opacity-80 transition shadow-xl border border-white/10">
                     <i class="fa-brands fa-google-play text-2xl text-primary"></i>
@@ -105,45 +105,26 @@
             </div>
         </div>
 
-        <!-- Sağ Taraf: Telefon Mockup (Uygulama İçi Arayüz Görseli) -->
         <div class="lg:col-span-5 flex justify-center">
             <div class="relative w-[280px] h-[560px] bg-black rounded-[45px] p-3 shadow-2xl border-4 border-gray-800 dark:border-white/20">
-                <!-- Telefon Çentiği -->
                 <div class="absolute top-4 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-20"></div>
-                
-                <!-- Ekran İçeriği (Uygulama İçi Sohbet Örneği) -->
                 <div class="w-full h-full bg-darkBg rounded-[35px] overflow-hidden flex flex-col justify-between p-4 text-white relative">
                     <div class="pt-6 text-center border-b border-white/10 pb-3">
                         <div class="w-10 h-10 bg-primary/30 rounded-full mx-auto flex items-center justify-center font-bold">H</div>
                         <div class="text-xs font-bold mt-1">Huangshuo</div>
                         <div class="text-[10px] text-gray-400">Student 25</div>
                     </div>
-
                     <div class="space-y-3 text-xs overflow-hidden my-auto">
-                        <div class="bg-white/10 p-2.5 rounded-xl rounded-tl-none max-w-[80%]">
-                            Want to chat?
-                        </div>
-                        <div class="bg-primary p-2.5 rounded-xl rounded-tr-none max-w-[80%] ml-auto text-right">
-                            all right
-                        </div>
-                        <div class="bg-white/10 p-2.5 rounded-xl rounded-tl-none max-w-[80%]">
-                            Do you want to connect?
-                        </div>
-                        <div class="bg-primary p-2.5 rounded-xl rounded-tr-none max-w-[80%] ml-auto text-right">
-                            awesome! i want to see more
-                        </div>
+                        <div class="bg-white/10 p-2.5 rounded-xl rounded-tl-none max-w-[80%]">Want to chat?</div>
+                        <div class="bg-primary p-2.5 rounded-xl rounded-tr-none max-w-[80%] ml-auto text-right">all right</div>
                     </div>
-
-                    <div class="bg-white/10 p-2 rounded-xl text-center text-[10px] text-gray-400">
-                        Type something...
-                    </div>
+                    <div class="bg-white/10 p-2 rounded-xl text-center text-[10px] text-gray-400">Type something...</div>
                 </div>
             </div>
         </div>
-
     </main>
 
-    <!-- Giriş Yap Modal Penceresi -->
+    <!-- Giriş Yap Modal -->
     <div id="login-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white dark:bg-cardBg max-w-md w-full p-8 rounded-3xl border border-gray-200 dark:border-white/10 shadow-2xl space-y-6 relative">
             <button onclick="closeLoginModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center text-gray-500 hover:bg-red-500 hover:text-white transition">
@@ -151,7 +132,7 @@
             </button>
             <div class="text-center space-y-2">
                 <h3 class="font-extrabold text-2xl">Axyra'ya Giriş Yap</h3>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Uygulama hesabınla giriş yaparak coin yükle.</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Uygulama hesabınla giriş yaparak coin yükle ve hediye gönder.</p>
             </div>
             <div class="space-y-4">
                 <input type="email" id="email" placeholder="E-posta Adresi" class="w-full bg-gray-50 dark:bg-darkBg border border-gray-200 dark:border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition">
@@ -161,7 +142,7 @@
         </div>
     </div>
 
-    <!-- Coin Mağazası Modal Penceresi (Artı Butonuna Basınca Açılır) -->
+    <!-- Coin Mağazası Modal -->
     <div id="shop-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white dark:bg-cardBg max-w-md w-full p-6 rounded-3xl border border-gray-200 dark:border-white/10 shadow-2xl space-y-4 max-h-[85vh] flex flex-col">
             <div class="flex justify-between items-center pb-3 border-b border-gray-100 dark:border-white/10">
@@ -173,68 +154,70 @@
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
-
-            <!-- Paketler Listesi -->
             <div class="space-y-3 overflow-y-auto pr-1 flex-1">
                 <div class="bg-gray-50 dark:bg-darkBg border border-gray-200 dark:border-white/10 p-3.5 rounded-2xl flex justify-between items-center hover:border-primary transition">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-2xl">🪙</span>
-                        <div>
-                            <div class="font-bold text-sm">5.000 Coin</div>
-                            <div class="text-xs text-gray-500">₺51,28</div>
-                        </div>
-                    </div>
+                    <div class="flex items-center space-x-3"><span class="text-2xl">🪙</span><div><div class="font-bold text-sm">5.000 Coin</div><div class="text-xs text-gray-500">₺51,28</div></div></div>
                     <button onclick="buyPackage(5000, 51.28)" class="bg-primary text-white px-4 py-2 rounded-xl font-bold text-xs shadow-md shadow-primary/20">Seç</button>
                 </div>
-
                 <div class="bg-gray-50 dark:bg-darkBg border border-gray-200 dark:border-white/10 p-3.5 rounded-2xl flex justify-between items-center hover:border-primary transition">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-2xl">🪙</span>
-                        <div>
-                            <div class="font-bold text-sm">10.000 Coin</div>
-                            <div class="text-xs text-gray-500">₺102,56</div>
-                        </div>
-                    </div>
+                    <div class="flex items-center space-x-3"><span class="text-2xl">🪙</span><div><div class="font-bold text-sm">10.000 Coin</div><div class="text-xs text-gray-500">₺102,56</div></div></div>
                     <button onclick="buyPackage(10000, 102.56)" class="bg-primary text-white px-4 py-2 rounded-xl font-bold text-xs shadow-md shadow-primary/20">Seç</button>
                 </div>
-
                 <div class="bg-gray-50 dark:bg-darkBg border border-gray-200 dark:border-white/10 p-3.5 rounded-2xl flex justify-between items-center hover:border-primary transition">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-2xl">🪙</span>
-                        <div>
-                            <div class="font-bold text-sm">20.000 Coin</div>
-                            <div class="text-xs text-gray-500">₺205,11</div>
-                        </div>
-                    </div>
+                    <div class="flex items-center space-x-3"><span class="text-2xl">🪙</span><div><div class="font-bold text-sm">20.000 Coin</div><div class="text-xs text-gray-500">₺205,11</div></div></div>
                     <button onclick="buyPackage(20000, 205.11)" class="bg-primary text-white px-4 py-2 rounded-xl font-bold text-xs shadow-md shadow-primary/20">Seç</button>
-                </div>
-
-                <div class="bg-gray-50 dark:bg-darkBg border border-gray-200 dark:border-white/10 p-3.5 rounded-2xl flex justify-between items-center hover:border-primary transition">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-2xl">🪙</span>
-                        <div>
-                            <div class="font-bold text-sm">50.000 Coin</div>
-                            <div class="text-xs text-gray-500">₺512,77</div>
-                        </div>
-                    </div>
-                    <button onclick="buyPackage(50000, 512.77)" class="bg-primary text-white px-4 py-2 rounded-xl font-bold text-xs shadow-md shadow-primary/20">Seç</button>
-                </div>
-
-                <div class="bg-gray-50 dark:bg-darkBg border border-gray-200 dark:border-white/10 p-3.5 rounded-2xl flex justify-between items-center hover:border-primary transition">
-                    <div class="flex items-center space-x-3">
-                        <span class="text-2xl">🪙</span>
-                        <div>
-                            <div class="font-bold text-sm">100.000 Coin</div>
-                            <div class="text-xs text-gray-500">₺1.025,54</div>
-                        </div>
-                    </div>
-                    <button onclick="buyPackage(100000, 1025.54)" class="bg-primary text-white px-4 py-2 rounded-xl font-bold text-xs shadow-md shadow-primary/20">Seç</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Alt Bilgi (Footer) -->
+    <!-- Arkadaşa Hediye Gönder Modal (Yalnızca Axyra ID ile) -->
+    <div id="gift-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-cardBg max-w-md w-full p-6 rounded-3xl border border-gray-200 dark:border-white/10 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center pb-3 border-b border-gray-100 dark:border-white/10">
+                <div>
+                    <h3 class="font-extrabold text-lg">Axyra ID ile Coin Gönder</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Hedef kullanıcının Axyra ID'sini girin.</p>
+                </div>
+                <button onclick="closeGiftModal()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center text-gray-500 hover:bg-red-500 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="text-xs text-gray-400 font-medium mb-1 block">Axyra Kullanıcı ID</label>
+                    <div class="flex space-x-2">
+                        <input type="text" id="target-user-id" placeholder="Örn: kullanıcı ID'sini buraya yazın" class="w-full bg-gray-50 dark:bg-darkBg border border-gray-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary transition">
+                        <button onclick="searchUser()" class="bg-gray-200 dark:bg-white/10 px-4 rounded-xl font-bold text-xs hover:opacity-80 transition">Ara</button>
+                    </div>
+                </div>
+
+                <!-- Bulunan Kullanıcı Kartı (Başlangıçta Gizli) -->
+                <div id="target-user-card" class="hidden bg-gray-50 dark:bg-darkBg p-3.5 rounded-2xl border border-primary/30 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div>
+                            <div id="target-username" class="font-bold text-sm">Kullanıcı Bulundu</div>
+                            <div class="text-[10px] text-gray-400">ID: <span id="target-uid-text">---</span></div>
+                        </div>
+                    </div>
+                    <span class="text-xs text-green-500 font-bold bg-green-500/10 px-2 py-1 rounded-lg">Geçerli ID</span>
+                </div>
+
+                <div>
+                    <label class="text-xs text-gray-400 font-medium mb-1 block">Gönderilecek Coin Miktarı</label>
+                    <input type="number" id="gift-coin-amount" placeholder="Örn: 1000" class="w-full bg-gray-50 dark:bg-darkBg border border-gray-200 dark:border-white/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary transition">
+                </div>
+
+                <button onclick="sendCoinGift()" class="w-full bg-primary text-white font-bold py-3 rounded-xl hover:opacity-95 transition shadow-lg shadow-primary/30 text-sm">Coin Transfer Et</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alt Bilgi -->
     <footer class="text-center py-6 text-xs text-gray-400 dark:text-gray-500 border-t border-gray-100 dark:border-white/10">
         &copy; 2026 Axyra. Tüm hakları saklıdır.
     </footer>
@@ -262,26 +245,21 @@
             updateIcon();
         }
 
-        window.openLoginModal = function() {
-            document.getElementById('login-modal').classList.remove('hidden');
-        }
-        window.closeLoginModal = function() {
-            document.getElementById('login-modal').classList.add('hidden');
-        }
+        window.openLoginModal = function() { document.getElementById('login-modal').classList.remove('hidden'); }
+        window.closeLoginModal = function() { document.getElementById('login-modal').classList.add('hidden'); }
 
-        window.openShopModal = function() {
-            document.getElementById('shop-modal').classList.remove('hidden');
-        }
-        window.closeShopModal = function() {
-            document.getElementById('shop-modal').classList.add('hidden');
-        }
+        window.openShopModal = function() { document.getElementById('shop-modal').classList.remove('hidden'); }
+        window.closeShopModal = function() { document.getElementById('shop-modal').classList.add('hidden'); }
+
+        window.openGiftModal = function() { document.getElementById('gift-modal').classList.remove('hidden'); }
+        window.closeGiftModal = function() { document.getElementById('gift-modal').classList.add('hidden'); }
     </script>
 
-    <!-- Firebase Entegrasyonu -->
+    <!-- Firebase Entegrasyonu ve Sadece ID ile Arama Mantığı -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyC8gorNkABOCLcvRG5Jremc12U-aCHKgVk",
@@ -297,17 +275,14 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             signInWithEmailAndPassword(auth, email, password)
-                .then(() => {
-                    closeLoginModal();
-                })
+                .then(() => { closeLoginModal(); })
                 .catch((error) => alert("Giriş başarısız: " + error.message));
         }
 
-        window.logout = function() {
-            signOut(auth);
-        }
+        window.logout = function() { signOut(auth); }
 
         let unsubscribe = null;
+        let foundTargetUserId = null;
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -318,20 +293,96 @@
                 unsubscribe = onSnapshot(userRef, (docSnap) => {
                     if (docSnap.exists()) {
                         const userData = docSnap.data();
-                        const currentCoins = userData.coins || 0;
-                        document.getElementById('user-coins').innerText = currentCoins.toLocaleString();
+                        document.getElementById('user-coins').innerText = (userData.coins || 0).toLocaleString();
                     } else {
                         document.getElementById('user-coins').innerText = "0";
                     }
                 });
-
             } else {
                 if (unsubscribe) unsubscribe();
                 document.getElementById('login-btn-nav').classList.remove('hidden');
                 document.getElementById('user-info').classList.add('hidden');
                 closeShopModal();
+                closeGiftModal();
             }
         });
+
+        // Yalnızca Axyra ID ile Kullanıcı Arama Fonksiyonu
+        window.searchUser = async function() {
+            const targetId = document.getElementById('target-user-id').value.trim();
+            if (!targetId) {
+                alert("Lütfen bir Axyra ID girin.");
+                return;
+            }
+
+            try {
+                const userDocRef = doc(db, "users", targetId);
+                const userSnap = await getDoc(userDocRef);
+
+                if (userSnap.exists()) {
+                    foundTargetUserId = targetId;
+                    document.getElementById('target-uid-text').innerText = targetId;
+                    document.getElementById('target-user-card').classList.remove('hidden');
+                } else {
+                    alert("Bu ID'ye sahip bir kullanıcı bulunamadı!");
+                    document.getElementById('target-user-card').classList.add('hidden');
+                    foundTargetUserId = null;
+                }
+            } catch (error) {
+                alert("Arama sırasında hata oluştu: " + error.message);
+            }
+        };
+
+        // Coin Transfer Fonksiyonu
+        window.sendCoinGift = async function() {
+            const currentUser = auth.currentUser;
+            if (!currentUser) {
+                alert("Önce giriş yapmalısınız!");
+                return;
+            }
+
+            if (!foundTargetUserId) {
+                alert("Lütfen önce geçerli bir Axyra ID aratıp doğrulayın.");
+                return;
+            }
+
+            if (currentUser.uid === foundTargetUserId) {
+                alert("Kendine coin gönderemezsin!");
+                return;
+            }
+
+            const amount = parseInt(document.getElementById('gift-coin-amount').value);
+            if (isNaN(amount) || amount <= 0) {
+                alert("Lütfen geçerli bir coin miktarı girin.");
+                return;
+            }
+
+            try {
+                const senderRef = doc(db, "users", currentUser.uid);
+                const senderSnap = await getDoc(senderRef);
+                const senderCoins = senderSnap.exists() ? (senderSnap.data().coins || 0) : 0;
+
+                if (senderCoins < amount) {
+                    alert("Yetersiz bakiye! Cüzdanında yeterli coin bulunmuyor.");
+                    return;
+                }
+
+                const receiverRef = doc(db, "users", foundTargetUserId);
+
+                await updateDoc(senderRef, { coins: increment(-amount) });
+                await updateDoc(receiverRef, { coins: increment(amount) });
+
+                alert(`Başarıyla ${amount.toLocaleString()} Coin hediye gönderildi!`);
+                closeGiftModal();
+                document.getElementById('target-user-id').value = "";
+                document.getElementById('gift-coin-amount').value = "";
+                document.getElementById('target-user-card').classList.add('hidden');
+                foundTargetUserId = null;
+
+            } catch (error) {
+                alert("Transfer başarısız: " + error.message);
+            }
+        };
 
         window.buyPackage = function(coins, price) {
             alert(`${coins.toLocaleString()} Coin (${price} TL) için PayTR ödeme adımına geçiliyor...`);
