@@ -200,11 +200,11 @@
                             <i class="fa-solid fa-user"></i>
                         </div>
                         <div>
-                            <div id="target-username" class="font-bold text-sm">Kullanıcı Bulundu</div>
+                            <div id="target-username" class="font-bold text-sm">---</div>
                             <div class="text-[10px] text-gray-400">Axyra ID: <span id="target-uid-text">---</span></div>
                         </div>
                     </div>
-                    <span class="text-xs text-green-500 font-bold bg-green-500/10 px-2 py-1 rounded-lg">Geçerli ID</span>
+                    <span class="text-xs text-green-500 font-bold bg-green-500/10 px-2 py-1 rounded-lg">Bulundu</span>
                 </div>
 
                 <div>
@@ -282,7 +282,7 @@
         window.logout = function() { signOut(auth); }
 
         let unsubscribe = null;
-        let foundTargetDocId = null; // Firestore'daki gerçek doküman ID'si (UID)
+        let foundTargetDocId = null;
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -307,7 +307,7 @@
             }
         });
 
-        // axyraId alanı üzerinden arama yapma
+        // axyraId alanı üzerinden arama yapma ve ismi gösterme
         window.searchUser = async function() {
             const targetAxyraId = document.getElementById('target-user-id').value.trim();
             if (!targetAxyraId) {
@@ -321,8 +321,13 @@
 
                 if (!querySnapshot.empty) {
                     const userDoc = querySnapshot.docs[0];
-                    foundTargetDocId = userDoc.id; // Dokümanın gerçek UID'sini sakla
+                    foundTargetDocId = userDoc.id;
+                    const userData = userDoc.data();
                     
+                    // Veritabanındaki 'name' alanını al, yoksa 'username' yaz, o da yoksa ID göster
+                    const displayName = userData.name || userData.username || targetAxyraId;
+
+                    document.getElementById('target-username').innerText = displayName;
                     document.getElementById('target-uid-text').innerText = targetAxyraId;
                     document.getElementById('target-user-card').classList.remove('hidden');
                 } else {
@@ -371,7 +376,6 @@
 
                 const receiverRef = doc(db, "users", foundTargetDocId);
 
-                // Transfer: Gönderenden düş, alıcıya ekle
                 await updateDoc(senderRef, { coins: increment(-amount) });
                 await updateDoc(receiverRef, { coins: increment(amount) });
 
